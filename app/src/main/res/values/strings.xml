@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">ExpenseTracker</string>
+    <string name="add_text">Thêm khoản chi mới</string>
+    <string name="overview_text">Tổng quan chi tiêu</string>
+    <string name="detail_text">Danh sách chi tiêu</string>
+    <string name="highlight_text">Chi tiết</string>
+    <string name="note_text">Ghi chú</string>
+    <string name="hint_text_money">Số tiền đã chi</string>
+    <string name="hint_text_note">Ghi chú</string>
+    <string name="hint_text_date">Chọn ngày</string>
+    <string name="total_text">Tổng tiền chi</string>
+    <string name="save_text">Lưu khoản chi mới</string>
+    <string name="return_text">quay lại</string>
+    <string name="dola_text">$</string>
+    <string name="monday_text">Thứ 2</string>
+    <string name="tuesday_text">Thứ 3</string>
+    <string name="wednesday_text">Thứ 4</string>
+    <string name="thursday_text">Thứ 5</string>
+    <string name="friday_text">Thứ 6</string>
+    <string name="saturday_text">Thứ 7</string>
+    <string name="sunday_text">Chủ nhật</string>
+    <string name="day_text">DD/MM</string>
+    <string name="money_text">VNĐ</string>
+    <string name="in_day_text">Trong ngày</string>
+    <string name="in_week_text">Trong tuần</string>
+    <string name="total_day_text">Tổng tiền chi hôm nay</string>
+    <string name="total_week_text">Tổng tiền chi tuần này</string>
+
 </resources>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_history_layout"
+    android:background="@color/bg_color_app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddHistory">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/return_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="-12dp"
+                android:contentDescription="@string/return_text"
+                android:src="@drawable/ic_return"
+                android:scaleType="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/add_text"
+                android:textSize="28sp"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"/>
+
+        </FrameLayout>
+
+
+        <EditText
+            android:id="@+id/money_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/text_color"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_text_money"
+            android:textColorHint="@color/hint_text_color"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bg_edit_text"
+            app:backgroundTint="@null"
+            android:autofillHints="creditCardNumber"/>
+
+        <EditText
+            android:id="@+id/note_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/text_color"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_text_note"
+            android:textColorHint="@color/hint_text_color"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_edit_text"
+            app:backgroundTint="@null"
+            android:autofillHints="creditCardNumber"/>
+
+        <EditText
+            android:id="@+id/day_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textColor="@color/text_color"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_text_date"
+            android:textColorHint="@color/hint_text_color"
+            android:paddingStart="12dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_edit_text"
+            app:backgroundTint="@null"
+            android:autofillHints="creditCardNumber"
+            android:drawableEnd="@drawable/ic_calendar"/>
+        
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="224dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button"
+            app:backgroundTint="@null"
+            android:text="@string/save_text"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
