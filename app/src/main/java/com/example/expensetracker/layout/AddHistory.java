@@ -65,7 +65,6 @@ public class AddHistory extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish());
         dayInput.setOnClickListener(v -> showDatePickerDialog());
 
-        // Tự động định dạng số tiền khi nhập
         amountInput.addTextChangedListener(new TextWatcher() {
             private final DecimalFormat formatter = new DecimalFormat("#,###");
             private String current = "";
@@ -97,7 +96,6 @@ public class AddHistory extends AppCompatActivity {
         });
 
         saveButton.setOnClickListener(v -> {
-            // Bỏ dấu chấm trước khi lưu
             String amountText = amountInput.getText().toString().trim().replaceAll("\\.", "");
             String note = noteInput.getText().toString().trim();
             String day = dayInput.getText().toString().trim();

@@ -95,7 +95,6 @@ public class Overview extends Fragment {
         ArrayList<Integer> chartColors = new ArrayList<>();
         int totalWeekAmount = 0;
 
-        // --- BƯỚC 3: ĐỊNH DẠNG SỐ TIỀN TRONG DANH SÁCH ---
         DecimalFormat formatter = new DecimalFormat("#,###");
 
         for (int i = 0; i < 7; i++) {
@@ -142,7 +141,6 @@ public class Overview extends Fragment {
             dataSet.setSliceSpace(2f);
 
             PieData data = new PieData(dataSet);
-            // Hiển thị dạng phần trăm
             data.setValueFormatter(new PercentFormatter(pieChart));
             data.setValueTextSize(12f);
             data.setValueTextColor(Color.WHITE);

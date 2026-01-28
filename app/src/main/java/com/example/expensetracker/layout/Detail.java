@@ -25,17 +25,19 @@ import com.example.expensetracker.recyclerview.ExpenseViewModel;
 import com.example.expensetracker.recyclerview.RecyclerAdapter;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class Detail extends Fragment {
     private RecyclerAdapter adapter;
     private ExpenseViewModel expenseViewModel;
-    protected Button inWeekButton; // Giữ lại vì được truy cập từ setEvents
+    protected Button inWeekButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,20 +52,37 @@ public class Detail extends Fragment {
         ImageView addButton = view.findViewById(R.id.add_button);
         RecyclerView recyclerView = view.findViewById(R.id.detail_recycler_view);
         TextView totalText = view.findViewById(R.id.total_money_text);
-        TextView changeText = view.findViewById(R.id.change_text); // Tìm TextView cần thay đổi
+        TextView changeText = view.findViewById(R.id.change_text);
         inWeekButton = view.findViewById(R.id.in_week_button);
 
         setupRecyclerView(recyclerView);
 
         expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
-        // Truyền changeText vào setEvents
+
         setEvents(inDayButton, addButton, view, changeText);
 
         expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenseItems -> {
-            adapter.submitList(expenseItems);
+            List<com.example.expensetracker.recyclerview.ExpenseItem> sortedList = new ArrayList<>(expenseItems);
+
+            if (inWeekButton.isSelected()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                sortedList.sort((item1, item2) -> {
+                    try {
+                        Date date1 = sdf.parse(item1.getDay());
+                        Date date2 = sdf.parse(item2.getDay());
+                        // So sánh ngược để có thứ tự giảm dần
+                        return date2.compareTo(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return 0;
+                    }
+                });
+            }
+
+            adapter.submitList(sortedList);
 
             int total = 0;
-            for (com.example.expensetracker.recyclerview.ExpenseItem item : expenseItems) {
+            for (com.example.expensetracker.recyclerview.ExpenseItem item : sortedList) {
                 total += item.getAmount();
             }
             
@@ -72,7 +91,6 @@ public class Detail extends Fragment {
             totalText.setText(formattedTotal);
         });
 
-        // Đặt trạng thái ban đầu
         inDayButton.performClick();
     }
 
@@ -87,7 +105,6 @@ public class Detail extends Fragment {
         inDayButton.setOnClickListener(v -> {
             inDayButton.setSelected(true);
             inWeekButton.setSelected(false);
-            // Thay đổi văn bản thành "Tổng cộng trong ngày"
             changeText.setText(R.string.total_day_text);
 
             String today = getFormattedDate(Calendar.getInstance());
@@ -97,7 +114,6 @@ public class Detail extends Fragment {
         inWeekButton.setOnClickListener(v -> {
             inDayButton.setSelected(false);
             inWeekButton.setSelected(true);
-            // Thay đổi văn bản thành "Tổng cộng trong tuần"
             changeText.setText(R.string.total_week_text);
 
             expenseViewModel.setFilter(getWeekDateStrings());

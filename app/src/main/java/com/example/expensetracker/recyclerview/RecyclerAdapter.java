@@ -60,7 +60,6 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
         }
 
         void bind(ExpenseItem item) {
-            // --- ĐỊNH DẠNG SỐ TIỀN TRƯỚC KHI HIỂN THỊ ---
             DecimalFormat formatter = new DecimalFormat("#,###");
             String formattedAmount = formatter.format(item.getAmount()).replace(',', '.');
             amountText.setText(formattedAmount);
