@@ -88,7 +88,7 @@ public class AddHistory extends AppCompatActivity {
                 finish();
 
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Định dạng số tiền không hợp lệ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Định dạng số tiền không hợp lệ, phải là số nguyên", Toast.LENGTH_SHORT).show();
             }
         });
     }

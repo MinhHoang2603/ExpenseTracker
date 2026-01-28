@@ -21,6 +21,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+// --- BƯỚC 1: Thêm import cho PercentFormatter ---
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,12 +133,16 @@ public class Overview extends Fragment {
         } else {
             PieDataSet dataSet = new PieDataSet(entries, "Chi tiêu tuần");
             dataSet.setColors(chartColors);
-            dataSet.setValueTextColor(Color.WHITE);
-            dataSet.setValueTextSize(12f);
             dataSet.setSliceSpace(2f);
 
             PieData data = new PieData(dataSet);
+            data.setValueFormatter(new PercentFormatter(pieChart));
+            data.setValueTextSize(12f);
+            data.setValueTextColor(Color.WHITE);
+
+            pieChart.setUsePercentValues(true);
             pieChart.setData(data);
+            
             pieChart.getLegend().setEnabled(false);
             pieChart.getDescription().setEnabled(false);
             pieChart.setTouchEnabled(true);
