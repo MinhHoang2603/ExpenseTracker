@@ -102,8 +102,8 @@ public class AddHistory extends AppCompatActivity {
             String note = noteInput.getText().toString().trim();
             String day = dayInput.getText().toString().trim();
 
-            if (amountText.isEmpty() || day.isEmpty()) {
-                Toast.makeText(this, "Không được để trống số tiền, ngày tháng!", Toast.LENGTH_SHORT).show();
+            if (amountText.isEmpty() || note.isEmpty() || day.isEmpty()) {
+                Toast.makeText(this, "Không được để trống các ô!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
