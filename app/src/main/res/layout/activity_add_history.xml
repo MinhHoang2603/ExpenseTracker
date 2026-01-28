@@ -7,7 +7,7 @@
     android:background="@color/bg_color_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddHistory">
+    tools:context=".layout.AddHistory">
 
     <LinearLayout
         android:orientation="vertical"
@@ -36,39 +36,54 @@
                 android:scaleType="center"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="375dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:text="@string/add_text"
-                android:textSize="28sp"
                 android:textColor="@color/text_color"
-                android:textStyle="bold"/>
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
 
-
-        <EditText
-            android:id="@+id/money_edit_text"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:textColor="@color/text_color"
-            android:inputType="numberDecimal"
-            android:hint="@string/hint_text_money"
-            android:textColorHint="@color/hint_text_color"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/bg_edit_text"
-            app:backgroundTint="@null"
-            android:autofillHints="creditCardNumber"/>
+            android:layout_marginTop="60dp">
+
+            <EditText
+                android:id="@+id/money_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:textColor="@color/text_color"
+                android:inputType="numberDecimal"
+                android:hint="@string/hint_text_money"
+                android:textColorHint="@color/hint_text_color"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_edit_text"
+                app:backgroundTint="@null"
+                android:autofillHints="creditCardNumber" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_text"
+                android:textColor="@color/text_color"
+                android.textSize="18sp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center|end"/>
+
+        </FrameLayout>
+
 
         <EditText
             android:id="@+id/note_edit_text"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:textColor="@color/text_color"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:hint="@string/hint_text_note"
             android:textColorHint="@color/hint_text_color"
             android:paddingStart="12dp"
@@ -83,7 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:textColor="@color/text_color"
-            android:inputType="numberDecimal"
+            android:inputType="none"
+            android:focusable="false"
             android:hint="@string/hint_text_date"
             android:textColorHint="@color/hint_text_color"
             android:paddingStart="12dp"

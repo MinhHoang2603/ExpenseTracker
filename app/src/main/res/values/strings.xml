@@ -25,5 +25,6 @@
     <string name="in_week_text">Trong tuần</string>
     <string name="total_day_text">Tổng tiền chi hôm nay</string>
     <string name="total_week_text">Tổng tiền chi tuần này</string>
+    <string name="zero_text">0</string>
 
 </resources>

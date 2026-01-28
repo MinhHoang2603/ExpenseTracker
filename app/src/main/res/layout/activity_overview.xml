@@ -6,8 +6,7 @@
     android:id="@+id/overview_layout"
     android:background="@color/bg_color_app"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Overview">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -46,6 +45,7 @@
             android:textColor="@color/text_color"/>
 
         <ScrollView
+            android:scrollbars="none"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,6 +58,7 @@
                 android:paddingBottom="20dp">
 
                 <LinearLayout
+                    android:id="@+id/monday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -115,6 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -130,6 +132,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/tuesday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -187,6 +190,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -202,6 +206,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/wednesday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -259,6 +264,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -274,6 +280,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/thursday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -331,6 +338,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -346,6 +354,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/friday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -403,6 +412,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -418,6 +428,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/saturday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -475,6 +486,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView
@@ -490,6 +502,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/sunday"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -547,6 +560,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
+                            android:text="@string/zero_text"
                             android:textColor="@color/text_color" />
 
                         <TextView

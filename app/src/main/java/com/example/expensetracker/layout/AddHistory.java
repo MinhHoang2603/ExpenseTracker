@@ -1,0 +1,115 @@
+package com.example.expensetracker.layout;
+
+import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.expensetracker.R;
+import com.example.expensetracker.recyclerview.ExpenseItem;
+import com.example.expensetracker.recyclerview.ExpenseViewModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+public class AddHistory extends AppCompatActivity {
+    private Button saveButton;
+    private ImageView backButton;
+    private EditText amountInput;
+    private EditText noteInput;
+    private EditText dayInput;
+
+    private ExpenseViewModel expenseViewModel;
+    private final Calendar myCalendar = Calendar.getInstance();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_history);
+
+        expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+
+        bindViews();
+        setEvents();
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.add_history_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    private void bindViews() {
+        saveButton = findViewById(R.id.save_button);
+        backButton = findViewById(R.id.return_button);
+        amountInput = findViewById(R.id.money_edit_text);
+        noteInput = findViewById(R.id.note_edit_text);
+        dayInput = findViewById(R.id.day_edit_text);
+    }
+
+    private void setEvents() {
+        saveButton.setSelected(true);
+
+        backButton.setOnClickListener(v -> finish());
+
+        dayInput.setOnClickListener(v -> showDatePickerDialog());
+
+        saveButton.setOnClickListener(v -> {
+            String amountText = amountInput.getText().toString().trim();
+            String note = noteInput.getText().toString().trim();
+            String day = dayInput.getText().toString().trim();
+
+            if (amountText.isEmpty() || day.isEmpty()) {
+                Toast.makeText(this, "Không được để trống số tiền, ngày tháng!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                int amount = Integer.parseInt(amountText);
+                if (amount <= 0) {
+                    Toast.makeText(this, "Số tiền phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                ExpenseItem newExpense = new ExpenseItem(amount, note, day);
+                expenseViewModel.insert(newExpense);
+
+                Toast.makeText(this, "Thêm lịch sử thành công", Toast.LENGTH_SHORT).show();
+                finish();
+
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Định dạng số tiền không hợp lệ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        };
+
+        new DatePickerDialog(AddHistory.this, dateSetListener,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        dayInput.setText(sdf.format(myCalendar.getTime()));
+    }
+}

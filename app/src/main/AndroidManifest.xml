@@ -12,16 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpenseTracker">
         <activity
-            android:name=".Detail"
+            android:name=".layout.Detail"
             android:exported="false" />
         <activity
-            android:name=".Overview"
+            android:name=".layout.Overview"
             android:exported="false" />
         <activity
-            android:name=".AddHistory"
+            android:name=".layout.AddHistory"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".layout.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
