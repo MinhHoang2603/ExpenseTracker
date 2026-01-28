@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensetracker.R;
 
+import java.text.DecimalFormat;
+
 public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.ViewHolder> {
 
     public RecyclerAdapter() {
@@ -21,7 +23,7 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
     private static final DiffUtil.ItemCallback<ExpenseItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<ExpenseItem>() {
         @Override
         public boolean areItemsTheSame(@NonNull ExpenseItem oldItem, @NonNull ExpenseItem newItem) {
-            return oldItem == newItem;
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
@@ -58,7 +60,11 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
         }
 
         void bind(ExpenseItem item) {
-            amountText.setText(String.valueOf(item.getAmount()));
+            // --- ĐỊNH DẠNG SỐ TIỀN TRƯỚC KHI HIỂN THỊ ---
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            String formattedAmount = formatter.format(item.getAmount()).replace(',', '.');
+            amountText.setText(formattedAmount);
+            
             noteText.setText(item.getNote());
             dayText.setText(item.getDay());
         }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,9 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-// --- BƯỚC 1: Thêm import cho PercentFormatter ---
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,15 +95,20 @@ public class Overview extends Fragment {
         ArrayList<Integer> chartColors = new ArrayList<>();
         int totalWeekAmount = 0;
 
+        // --- BƯỚC 3: ĐỊNH DẠNG SỐ TIỀN TRONG DANH SÁCH ---
+        DecimalFormat formatter = new DecimalFormat("#,###");
+
         for (int i = 0; i < 7; i++) {
             String dateString = sdf.format(calendar.getTime());
             dayViews[i].setText(dateString);
             int totalDayAmount = totalsByDate.getOrDefault(dateString, 0);
-            totalViews[i].setText(String.format(Locale.US, "%d", totalDayAmount));
+
+            String formattedTotal = formatter.format(totalDayAmount).replace(',', '.');
+            totalViews[i].setText(formattedTotal);
 
             if (totalDayAmount > 0) {
                 entries.add(new PieEntry(totalDayAmount, dayLabels[i]));
-                
+
                 View dayLayout = view.findViewById(layoutIds[i]);
                 Drawable background = dayLayout.getBackground();
                 if (background instanceof ColorDrawable) {
@@ -136,13 +142,14 @@ public class Overview extends Fragment {
             dataSet.setSliceSpace(2f);
 
             PieData data = new PieData(dataSet);
+            // Hiển thị dạng phần trăm
             data.setValueFormatter(new PercentFormatter(pieChart));
             data.setValueTextSize(12f);
             data.setValueTextColor(Color.WHITE);
 
             pieChart.setUsePercentValues(true);
             pieChart.setData(data);
-            
+
             pieChart.getLegend().setEnabled(false);
             pieChart.getDescription().setEnabled(false);
             pieChart.setTouchEnabled(true);

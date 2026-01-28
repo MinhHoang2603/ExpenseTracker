@@ -2,6 +2,8 @@ package com.example.expensetracker.layout;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import com.example.expensetracker.R;
 import com.example.expensetracker.recyclerview.ExpenseItem;
 import com.example.expensetracker.recyclerview.ExpenseViewModel;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -59,13 +62,43 @@ public class AddHistory extends AppCompatActivity {
 
     private void setEvents() {
         saveButton.setSelected(true);
-
         backButton.setOnClickListener(v -> finish());
-
         dayInput.setOnClickListener(v -> showDatePickerDialog());
 
+        // Tự động định dạng số tiền khi nhập
+        amountInput.addTextChangedListener(new TextWatcher() {
+            private final DecimalFormat formatter = new DecimalFormat("#,###");
+            private String current = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().equals(current)) {
+                    return;
+                }
+                amountInput.removeTextChangedListener(this);
+                String cleanString = s.toString().replaceAll("[.,]", "");
+                if (!cleanString.isEmpty()) {
+                    try {
+                        long parsed = Long.parseLong(cleanString);
+                        String formatted = formatter.format(parsed).replace(',', '.');
+                        current = formatted;
+                        amountInput.setText(formatted);
+                        amountInput.setSelection(formatted.length());
+                    } catch (NumberFormatException e) { /* Bỏ qua */ }
+                }
+                amountInput.addTextChangedListener(this);
+            }
+        });
+
         saveButton.setOnClickListener(v -> {
-            String amountText = amountInput.getText().toString().trim();
+            // Bỏ dấu chấm trước khi lưu
+            String amountText = amountInput.getText().toString().trim().replaceAll("\\.", "");
             String note = noteInput.getText().toString().trim();
             String day = dayInput.getText().toString().trim();
 
@@ -88,7 +121,7 @@ public class AddHistory extends AppCompatActivity {
                 finish();
 
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Định dạng số tiền không hợp lệ, phải là số nguyên", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Định dạng số tiền không hợp lệ", Toast.LENGTH_SHORT).show();
             }
         });
     }

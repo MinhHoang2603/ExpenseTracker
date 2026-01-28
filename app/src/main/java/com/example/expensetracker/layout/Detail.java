@@ -24,6 +24,7 @@ import com.example.expensetracker.R;
 import com.example.expensetracker.recyclerview.ExpenseViewModel;
 import com.example.expensetracker.recyclerview.RecyclerAdapter;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,7 +64,11 @@ public class Detail extends Fragment {
             for (com.example.expensetracker.recyclerview.ExpenseItem item : expenseItems) {
                 total += item.getAmount();
             }
-            totalText.setText(String.format(Locale.US, "%d", total));
+            
+            // --- ĐỊNH DẠNG TỔNG SỐ TIỀN ---
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            String formattedTotal = formatter.format(total).replace(',', '.');
+            totalText.setText(formattedTotal);
         });
 
         inDayButton.performClick();
