@@ -33,7 +33,7 @@ public class AddHistory extends AppCompatActivity {
 
     private ExpenseViewModel expenseViewModel;
     private final Calendar myCalendar = Calendar.getInstance();
-
+    private ExpenseItem currentExpenseItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,19 @@ public class AddHistory extends AppCompatActivity {
         expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
 
         bindViews();
+        
+        if (getIntent().hasExtra("EDIT_EXPENSE_ITEM")) {
+            currentExpenseItem = (ExpenseItem) getIntent().getSerializableExtra("EDIT_EXPENSE_ITEM");
+            if (currentExpenseItem != null) {
+                DecimalFormat formatter = new DecimalFormat("#,###");
+                String formattedAmount = formatter.format(currentExpenseItem.getAmount()).replace(',', '.');
+                amountInput.setText(formattedAmount);
+                
+                noteInput.setText(currentExpenseItem.getNote());
+                dayInput.setText(currentExpenseItem.getDay());
+            }
+        }
+
         setEvents();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.add_history_layout), (v, insets) -> {
@@ -77,9 +90,7 @@ public class AddHistory extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals(current)) {
-                    return;
-                }
+                if (s.toString().equals(current)) return;
                 amountInput.removeTextChangedListener(this);
                 String cleanString = s.toString().replaceAll("[.,]", "");
                 if (!cleanString.isEmpty()) {
@@ -100,8 +111,8 @@ public class AddHistory extends AppCompatActivity {
             String note = noteInput.getText().toString().trim();
             String day = dayInput.getText().toString().trim();
 
-            if (amountText.isEmpty() || note.isEmpty() || day.isEmpty()) {
-                Toast.makeText(this, "Không được để trống các ô!", Toast.LENGTH_SHORT).show();
+            if (amountText.isEmpty() || day.isEmpty()) {
+                Toast.makeText(this, "Không được để trống số tiền, ngày tháng!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -112,10 +123,17 @@ public class AddHistory extends AppCompatActivity {
                     return;
                 }
 
-                ExpenseItem newExpense = new ExpenseItem(amount, note, day);
-                expenseViewModel.insert(newExpense);
-
-                Toast.makeText(this, "Thêm lịch sử thành công", Toast.LENGTH_SHORT).show();
+                if (currentExpenseItem != null) {
+                    currentExpenseItem.setAmount(amount);
+                    currentExpenseItem.setNote(note);
+                    currentExpenseItem.setDay(day);
+                    expenseViewModel.update(currentExpenseItem);
+                    Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                } else { 
+                    ExpenseItem newExpense = new ExpenseItem(amount, note, day);
+                    expenseViewModel.insert(newExpense);
+                    Toast.makeText(this, "Thêm lịch sử thành công", Toast.LENGTH_SHORT).show();
+                }
                 finish();
 
             } catch (NumberFormatException e) {

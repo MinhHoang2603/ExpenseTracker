@@ -9,6 +9,7 @@
     <color name="bg_color_app_bar_button">#5C5470</color>
     <color name="bg_chip_color">#2F2F3F</color>
     <color name="bg_chip_stroke_color">#5C5C6D</color>
+    <color name="bg_text_view_color">#3F3F53</color>
     <color name="text_color">#DADADA</color>
     <color name="hint_color">#99DADADA</color>
     <color name="hint_text_color">#8F8F8F</color>

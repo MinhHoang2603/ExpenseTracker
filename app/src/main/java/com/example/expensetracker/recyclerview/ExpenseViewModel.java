@@ -42,10 +42,14 @@ public class ExpenseViewModel extends AndroidViewModel {
         repository.insert(expense);
     }
 
+    public void update(ExpenseItem expense) {
+        repository.update(expense);
+    }
+
     public void delete(ExpenseItem expense) {
         repository.delete(expense);
     }
-
+    
     public LiveData<List<ExpenseItem>> getAllExpenses() {
         return repository.getAllExpenses();
     }

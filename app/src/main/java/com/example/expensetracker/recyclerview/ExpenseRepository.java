@@ -34,6 +34,12 @@ public class ExpenseRepository {
         });
     }
 
+    public void update(ExpenseItem expense) {
+        databaseWriteExecutor.execute(() -> {
+            expenseDao.update(expense);
+        });
+    }
+
     public void delete(ExpenseItem expense) {
         databaseWriteExecutor.execute(() -> {
             expenseDao.delete(expense);

@@ -16,6 +16,16 @@ import java.text.DecimalFormat;
 
 public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClicked(ExpenseItem expenseItem);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public RecyclerAdapter() {
         super(DIFF_CALLBACK);
     }
@@ -47,7 +57,7 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
         holder.bind(item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView amountText;
         TextView noteText;
         TextView dayText;
@@ -66,6 +76,12 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
             
             noteText.setText(item.getNote());
             dayText.setText(item.getDay());
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClicked(item);
+                }
+            });
         }
     }
 }
