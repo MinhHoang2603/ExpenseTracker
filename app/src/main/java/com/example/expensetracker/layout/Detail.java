@@ -35,9 +35,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class Detail extends Fragment {
+    private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     private ExpenseViewModel expenseViewModel;
     protected Button inWeekButton;
+    protected Button inDayButton;
+    protected TextView totalText;
+    protected TextView changeText;
+    protected ImageView addButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,18 +53,13 @@ public class Detail extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button inDayButton = view.findViewById(R.id.in_day_button);
-        ImageView addButton = view.findViewById(R.id.add_button);
-        RecyclerView recyclerView = view.findViewById(R.id.detail_recycler_view);
-        TextView totalText = view.findViewById(R.id.total_money_text);
-        TextView changeText = view.findViewById(R.id.change_text);
-        inWeekButton = view.findViewById(R.id.in_week_button);
+        bindViews(view);
 
-        setupRecyclerView(recyclerView);
+        setupRecyclerView();
 
         expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
 
-        setEvents(inDayButton, addButton, view, changeText);
+        setEvents(view);
 
         expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenseItems -> {
             List<com.example.expensetracker.recyclerview.ExpenseItem> sortedList = new ArrayList<>(expenseItems);
@@ -70,7 +70,6 @@ public class Detail extends Fragment {
                     try {
                         Date date1 = sdf.parse(item1.getDay());
                         Date date2 = sdf.parse(item2.getDay());
-                        // So sánh ngược để có thứ tự giảm dần
                         return date2.compareTo(date1);
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -94,14 +93,21 @@ public class Detail extends Fragment {
         inDayButton.performClick();
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    private void setupRecyclerView() {
         adapter = new RecyclerAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
+    void bindViews(View view) {
+        inDayButton = view.findViewById(R.id.in_day_button);
+        inWeekButton = view.findViewById(R.id.in_week_button);
+        totalText = view.findViewById(R.id.total_money_text);
+        changeText = view.findViewById(R.id.change_text);
+        recyclerView = view.findViewById(R.id.detail_recycler_view);
+        addButton = view.findViewById(R.id.add_button);
+    }
     @SuppressLint("ClickableViewAccessibility")
-    private void setEvents(Button inDayButton, ImageView addButton, View boundaryView, TextView changeText) {
+    private void setEvents(View boundaryView) {
         inDayButton.setOnClickListener(v -> {
             inDayButton.setSelected(true);
             inWeekButton.setSelected(false);
