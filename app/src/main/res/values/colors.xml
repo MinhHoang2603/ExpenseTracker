@@ -3,14 +3,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="bg_color_app">#1E1E2F</color>
-    <color name="bg_color_button">#748896</color>
-    <color name="bg_color_app_bar">#2C2C3C</color>
-    <color name="bg_color_app_bar_button">#5C5470</color>
-    <color name="bg_chip_color">#2F2F3F</color>
-    <color name="bg_chip_stroke_color">#5C5C6D</color>
-    <color name="bg_text_view_color">#3F3F53</color>
-    <color name="text_color">#DADADA</color>
-    <color name="hint_color">#99DADADA</color>
+    <color name="bg_color_app">#E8F5F4</color>
+    <color name="bg_color_button">#99B3D4F6</color>
+    <color name="bg_color_app_bar">#FFFFFF</color>
+    <color name="bg_color_app_bar_button">#66B3D4F6</color>
+    <color name="bg_chip_color">#D0EBE9</color>
+    <color name="bg_chip_stroke_color">#B2DFDB</color>
+    <color name="bg_text_view_color">#FFFFFF</color>
+    <color name="text_color">#333333</color>
+    <color name="hint_color">#8F8F8F</color>
     <color name="hint_text_color">#8F8F8F</color>
+
+    <color name="chart_2_color">#A8E6CF</color>
+    <color name="chart_3_color">#D6CDEA</color>
+    <color name="chart_4_color">#FFF3B0</color>
+    <color name="chart_5_color">#FFD6A5</color>
+    <color name="chart_6_color">#FFB7B2</color>
+    <color name="chart_7_color">#9AD0EC</color>
+    <color name="chart_cn_color">#D3D3D3</color>
 </resources>

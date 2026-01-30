@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#4B6F44">
+                    android:background="@color/chart_2_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#5C5470">
+                    android:background="@color/chart_3_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#3E4C59">
+                    android:background="@color/chart_4_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -285,7 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#6E5849">
+                    android:background="@color/chart_5_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -359,7 +359,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#7D7C8B">
+                    android:background="@color/chart_6_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -433,7 +433,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#3A3A4A">
+                    android:background="@color/chart_7_color">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -507,7 +507,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
-                    android:background="#8B3A3A">
+                    android:background="@color/chart_cn_color">
 
                     <TextView
                         android:layout_width="wrap_content"
