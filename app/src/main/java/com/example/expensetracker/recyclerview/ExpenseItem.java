@@ -51,11 +51,7 @@ public class ExpenseItem implements Serializable {
     }
 
     public void setAmount(int amount) {
-        if (amount < 0) {
-            this.amount = 0;
-        } else {
-            this.amount = amount;
-        }
+        this.amount = Math.max(amount, 0);
     }
 
     public void setNote(String note) {

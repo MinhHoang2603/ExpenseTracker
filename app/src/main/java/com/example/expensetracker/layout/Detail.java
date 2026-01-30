@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,9 +75,12 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
                     try {
                         Date date1 = sdf.parse(item1.getDay());
                         Date date2 = sdf.parse(item2.getDay());
-                        return date2.compareTo(date1);
+                        if (date1 != null && date2 != null) {
+                            return date2.compareTo(date1);
+                        }
+                        return 0;
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        Log.e("DetailFragment", "Error parsing date for sorting", e);
                         return 0;
                     }
                 });
@@ -101,7 +105,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
         adapter = new RecyclerAdapter();
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
     @Override
@@ -110,7 +114,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
     }
 
     private void showEditDeleteDialog(ExpenseItem expenseItem) {
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.edit_delete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -123,9 +127,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
         deleteButton.setSelected(true);
 
         editButton.setOnClickListener(v -> {
-            // --- BƯỚC 2: Gửi dữ liệu sang AddHistory Activity ---
             Intent intent = new Intent(getActivity(), AddHistory.class);
-            // "Gói" toàn bộ đối tượng expenseItem vào Intent
             intent.putExtra("EDIT_EXPENSE_ITEM", expenseItem);
             startActivity(intent);
             dialog.dismiss();
@@ -133,7 +135,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
 
         deleteButton.setOnClickListener(v -> {
             expenseViewModel.delete(expenseItem);
-            Toast.makeText(getContext(), "Đã xóa ghi chú", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Đã xóa ghi chú", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
 
@@ -189,7 +191,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
                     float upRawY = event.getRawY();
                     float deltaX = upRawX - downRawXY[0];
                     float deltaY = upRawY - downRawXY[1];
-                    float touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+                    float touchSlop = ViewConfiguration.get(requireContext()).getScaledTouchSlop();
                     if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) < touchSlop) {
                         v.performClick();
                     }

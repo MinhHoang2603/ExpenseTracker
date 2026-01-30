@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -50,7 +50,9 @@ public class Overview extends Fragment {
 
             Map<String, Integer> totalsByDate = new HashMap<>();
             for (ExpenseItem item : expenseItems) {
-                totalsByDate.put(item.getDay(), totalsByDate.getOrDefault(item.getDay(), 0) + item.getAmount());
+                if (item.getDay() != null) {
+                    totalsByDate.merge(item.getDay(), item.getAmount(), Integer::sum);
+                }
             }
 
             updateWeekView(view, totalsByDate);
@@ -100,7 +102,9 @@ public class Overview extends Fragment {
         for (int i = 0; i < 7; i++) {
             String dateString = sdf.format(calendar.getTime());
             dayViews[i].setText(dateString);
-            int totalDayAmount = totalsByDate.getOrDefault(dateString, 0);
+
+            Integer dayAmount = totalsByDate.get(dateString);
+            int totalDayAmount = (dayAmount != null) ? dayAmount : 0;
 
             String formattedTotal = formatter.format(totalDayAmount).replace(',', '.');
             totalViews[i].setText(formattedTotal);
@@ -143,10 +147,13 @@ public class Overview extends Fragment {
             PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter(pieChart));
             data.setValueTextSize(12f);
-            data.setValueTextColor(Color.WHITE);
+            data.setValueTextColor(ContextCompat.getColor(requireContext(), R.color.text_color));
 
             pieChart.setUsePercentValues(true);
             pieChart.setData(data);
+
+            pieChart.setEntryLabelColor(ContextCompat.getColor(requireContext(), R.color.text_color));
+            pieChart.setEntryLabelTextSize(12f);
 
             pieChart.getLegend().setEnabled(false);
             pieChart.getDescription().setEnabled(false);

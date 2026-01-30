@@ -26,5 +26,8 @@
     <string name="total_day_text">Tổng tiền chi hôm nay</string>
     <string name="total_week_text">Tổng tiền chi tuần này</string>
     <string name="zero_text">0</string>
+    <string name="edit_text">Sửa</string>
+    <string name="delete_text">Xóa</string>
+    <string name="edit_delete_text">Chỉnh sửa ghi chú này?</string>
 
 </resources>

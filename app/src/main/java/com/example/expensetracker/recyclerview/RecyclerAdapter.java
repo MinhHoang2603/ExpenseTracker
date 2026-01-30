@@ -30,7 +30,7 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<ExpenseItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<ExpenseItem>() {
+    private static final DiffUtil.ItemCallback<ExpenseItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
         @Override
         public boolean areItemsTheSame(@NonNull ExpenseItem oldItem, @NonNull ExpenseItem newItem) {
             return oldItem.getId() == newItem.getId();

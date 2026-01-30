@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="68dp"
-            android:text="Chinh sua ghi chu nay?"
+            android:text="@string/edit_delete_text"
             android:textColor="@color/text_color"
             android:textSize="20sp"
             android:gravity="center"
@@ -39,22 +39,24 @@
                 android:id="@+id/edit_button"
                 android:layout_width="130dp"
                 android:layout_height="56dp"
-                android:text="sua"
+                android:text="@string/edit_text"
                 android:textSize="18sp"
                 android:textColor="@color/text_color"
                 android:background="@drawable/bg_button"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/delete_button"
                 android:layout_width="130dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="20dp"
-                android:text="xoa"
+                android:text="@string/delete_text"
                 android:textSize="18sp"
                 android:textColor="@color/text_color"
                 android:background="@drawable/bg_button"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
 

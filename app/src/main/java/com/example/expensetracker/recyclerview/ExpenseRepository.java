@@ -29,20 +29,14 @@ public class ExpenseRepository {
     }
 
     public void insert(ExpenseItem expense) {
-        databaseWriteExecutor.execute(() -> {
-            expenseDao.insert(expense);
-        });
+        databaseWriteExecutor.execute(() -> expenseDao.insert(expense));
     }
 
     public void update(ExpenseItem expense) {
-        databaseWriteExecutor.execute(() -> {
-            expenseDao.update(expense);
-        });
+        databaseWriteExecutor.execute(() -> expenseDao.update(expense));
     }
 
     public void delete(ExpenseItem expense) {
-        databaseWriteExecutor.execute(() -> {
-            expenseDao.delete(expense);
-        });
+        databaseWriteExecutor.execute(() -> expenseDao.delete(expense));
     }
 }
