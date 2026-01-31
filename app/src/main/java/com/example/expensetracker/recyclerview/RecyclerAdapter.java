@@ -30,7 +30,7 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<ExpenseItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
+    private static final DiffUtil.ItemCallback<ExpenseItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<ExpenseItem>() {
         @Override
         public boolean areItemsTheSame(@NonNull ExpenseItem oldItem, @NonNull ExpenseItem newItem) {
             return oldItem.getId() == newItem.getId();
@@ -74,7 +74,14 @@ public class RecyclerAdapter extends ListAdapter<ExpenseItem, RecyclerAdapter.Vi
             String formattedAmount = formatter.format(item.getAmount()).replace(',', '.');
             amountText.setText(formattedAmount);
             
-            noteText.setText(item.getNote());
+            // --- HIỂN THỊ GHI CHÚ MẶC ĐỊNH ---
+            String note = item.getNote();
+            if (note == null || note.trim().isEmpty()) {
+                noteText.setText("Ghi chú"); // Văn bản mặc định
+            } else {
+                noteText.setText(note);
+            }
+            
             dayText.setText(item.getDay());
 
             itemView.setOnClickListener(v -> {

@@ -1,6 +1,7 @@
 package com.example.expensetracker.layout;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import com.example.expensetracker.recyclerview.ExpenseItem;
 import com.example.expensetracker.recyclerview.ExpenseViewModel;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -55,6 +57,14 @@ public class AddHistory extends AppCompatActivity {
                 
                 noteInput.setText(currentExpenseItem.getNote());
                 dayInput.setText(currentExpenseItem.getDay());
+
+                // Cập nhật myCalendar với ngày của mục đang sửa
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                    myCalendar.setTime(sdf.parse(currentExpenseItem.getDay()));
+                } catch (ParseException e) {
+                    // Nếu lỗi, giữ lại ngày hôm nay
+                }
             }
         }
 
@@ -113,8 +123,9 @@ public class AddHistory extends AppCompatActivity {
             String note = noteInput.getText().toString().trim();
             String day = dayInput.getText().toString().trim();
 
-            if (amountText.isEmpty() || note.isEmpty() || day.isEmpty()) {
-                Toast.makeText(this, "Không được để trống các ô!", Toast.LENGTH_SHORT).show();
+            // Ghi chú không còn là bắt buộc
+            if (amountText.isEmpty() || day.isEmpty()) {
+                Toast.makeText(this, "Không được để trống số tiền, ngày tháng!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -135,6 +146,13 @@ public class AddHistory extends AppCompatActivity {
                     ExpenseItem newExpense = new ExpenseItem(amount, note, day);
                     expenseViewModel.insert(newExpense);
                     Toast.makeText(this, "Thêm lịch sử thành công", Toast.LENGTH_SHORT).show();
+
+                    // --- BƯỚC 1: Gửi tín hiệu khi thêm mới ---
+                    if (isDateInCurrentWeek(myCalendar) && !isToday(myCalendar)) {
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("SWITCH_TO_WEEK_VIEW", true);
+                        setResult(AppCompatActivity.RESULT_OK, resultIntent);
+                    }
                 }
                 finish();
 
@@ -162,5 +180,32 @@ public class AddHistory extends AppCompatActivity {
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         dayInput.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    // --- Các phương thức hỗ trợ để kiểm tra ngày ---
+    private boolean isToday(Calendar cal) {
+        Calendar today = Calendar.getInstance();
+        return cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+               cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR);
+    }
+
+    private boolean isDateInCurrentWeek(Calendar cal) {
+        Calendar startOfWeek = Calendar.getInstance();
+        startOfWeek.setFirstDayOfWeek(Calendar.MONDAY);
+        startOfWeek.set(Calendar.DAY_OF_WEEK, startOfWeek.getFirstDayOfWeek());
+        
+        startOfWeek.set(Calendar.HOUR_OF_DAY, 0);
+        startOfWeek.set(Calendar.MINUTE, 0);
+        startOfWeek.set(Calendar.SECOND, 0);
+        startOfWeek.set(Calendar.MILLISECOND, 0);
+
+        Calendar endOfWeek = (Calendar) startOfWeek.clone();
+        endOfWeek.add(Calendar.DAY_OF_YEAR, 6);
+        
+        endOfWeek.set(Calendar.HOUR_OF_DAY, 23);
+        endOfWeek.set(Calendar.MINUTE, 59);
+        endOfWeek.set(Calendar.SECOND, 59);
+
+        return !cal.before(startOfWeek) && !cal.after(endOfWeek);
     }
 }

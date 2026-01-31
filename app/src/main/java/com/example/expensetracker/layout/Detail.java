@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,26 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
     private ExpenseViewModel expenseViewModel;
     protected Button inWeekButton; 
 
+    private ActivityResultLauncher<Intent> addHistoryLauncher;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        addHistoryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
+                    if (result.getData().getBooleanExtra("SWITCH_TO_WEEK_VIEW", false)) {
+                        if (inWeekButton != null && !inWeekButton.isSelected()) {
+                            inWeekButton.performClick();
+                        }
+                    }
+                }
+            }
+        );
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_detail, container, false);
@@ -68,7 +91,6 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
 
         expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenseItems -> {
             List<ExpenseItem> sortedList = new ArrayList<>(expenseItems);
-
             if (inWeekButton.isSelected()) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                 sortedList.sort((item1, item2) -> {
@@ -85,14 +107,11 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
                     }
                 });
             }
-
             adapter.submitList(sortedList);
-
             int total = 0;
             for (ExpenseItem item : sortedList) {
                 total += item.getAmount();
             }
-            
             DecimalFormat formatter = new DecimalFormat("#,###");
             String formattedTotal = formatter.format(total).replace(',', '.');
             totalText.setText(formattedTotal);
@@ -129,7 +148,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
         editButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddHistory.class);
             intent.putExtra("EDIT_EXPENSE_ITEM", expenseItem);
-            startActivity(intent);
+            addHistoryLauncher.launch(intent);
             dialog.dismiss();
         });
 
@@ -161,7 +180,7 @@ public class Detail extends Fragment implements RecyclerAdapter.OnItemClickListe
 
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddHistory.class);
-            startActivity(intent);
+            addHistoryLauncher.launch(intent);
         });
 
         final float[] downRawXY = {0, 0};
